@@ -67,7 +67,7 @@ class DoublyLinkedList:
         # otherwise set next as head, set next's prev to none, set next to none
         else:
             current = self.head
-            self.head.next = self.head
+            self.head = self.head.next
             self.head.prev = None
             current.next = None
             self.length -= 1
@@ -114,7 +114,7 @@ class DoublyLinkedList:
             return current.value
         else:
             current = self.tail
-            self.tail.prev = self.tail
+            self.tail = self.tail.prev
             self.tail.next = None
             current.prev = None
             self.length -= 1
@@ -142,7 +142,32 @@ class DoublyLinkedList:
     """
 
     def delete(self, node):
-        pass
+        # check if the linked list empty
+        if self.head is None and self.tail is None:
+            return None
+        # check if there is only one linked list node
+        if self.head == self.tail:
+            current = self.head.value
+            self.head = None
+            self.tail = None
+            self.length = 0
+            return current
+        # check if node is head
+        if node.prev == None:
+            self.remove_from_head()
+            return self.head.value
+        # check if node is tail
+        if node.next == None:
+            self.remove_from_tail()
+            return self.tail.value
+        else:
+            node.next.prev = node.prev
+            node.prev.next = node.next
+            node.next = None
+            node.prev = None
+            self.length -= 1
+            pass
+
 
     """
     Finds and returns the maximum value of all the nodes 
@@ -150,4 +175,18 @@ class DoublyLinkedList:
     """
 
     def get_max(self):
-        pass
+        if not self.head:
+            return None
+        # reference to the largest value we've seen so far
+        max_value = self.head.value
+        # reference to our current node as we traverse the list
+        current = self.head.next
+        # check to see if we're still at a valid list node
+        while current:
+            # check to see if the current value is greater than the max_value
+            if current.value > max_value:
+                # if so, update our max_value variable
+                max_value = current.value
+            # update the current node to the next node in the list
+            current = current.next
+        return max_value

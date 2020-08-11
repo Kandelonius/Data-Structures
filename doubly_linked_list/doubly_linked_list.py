@@ -126,7 +126,20 @@ class DoublyLinkedList:
     """
 
     def move_to_front(self, node):
-        pass
+        # check if the linked list empty
+        if self.head is None and self.tail is None:
+            return None
+        # check if there is only one linked list node
+        if self.head == self.tail:
+            return node
+        # check to see if node is already at the front
+        if node == self.head:
+            return self.head
+        else:
+            current = node
+            self.delete(current)
+            self.add_to_head(current.value)
+            return current.value
 
     """
     Removes the input node from its current spot in the 
@@ -134,7 +147,20 @@ class DoublyLinkedList:
     """
 
     def move_to_end(self, node):
-        pass
+        # check if the linked list empty
+        if self.head is None and self.tail is None:
+            return None
+        # check if there is only one linked list node
+        if self.head == self.tail:
+            return node
+        # check to see if node is already at the end
+        if node == self.tail:
+            return self.tail
+        else:
+            current = node
+            self.delete(current)
+            self.add_to_tail(current.value)
+            return current.value
 
     """
     Deletes the input node from the List, preserving the 
@@ -166,7 +192,7 @@ class DoublyLinkedList:
             node.next = None
             node.prev = None
             self.length -= 1
-            pass
+            return node
 
 
     """
@@ -180,7 +206,7 @@ class DoublyLinkedList:
         # reference to the largest value we've seen so far
         max_value = self.head.value
         # reference to our current node as we traverse the list
-        current = self.head.next
+        current = self.head
         # check to see if we're still at a valid list node
         while current:
             # check to see if the current value is greater than the max_value

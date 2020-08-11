@@ -15,6 +15,7 @@ Stretch: What if you could only use instances of your Stack class to implement t
 """
 from singly_linked_list.singly_linked_list import LinkedList
 
+
 # class Queue:
 #     def __init__(self):
 #         self.size = 0

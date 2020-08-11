@@ -1,4 +1,3 @@
-
 class Node:
     def __init__(self, value, next_node=None):
         self.value = value
@@ -12,6 +11,7 @@ class Node:
 
     def set_next(self, new_next):
         self.next_node = new_next
+
 
 class LinkedList:
     def __init__(self):
@@ -75,15 +75,15 @@ class LinkedList:
 
         # otherwise, the linked list has more than one Node
         else:
-        # store the last Node's value in a nother variable so we can return it
+            # store the last Node's value in a nother variable so we can return it
             val = self.tail.get_value()
-        # we need to set `self.tail` to the second-to-last Node
-        # the only way we can do this, is by traversing the whole linked list
-        # from the beginning
+            # we need to set `self.tail` to the second-to-last Node
+            # the only way we can do this, is by traversing the whole linked list
+            # from the beginning
 
-        # starting from the head, we'll traverse down to the second-to-last Node
-        # init another reference to keep track of where we are in the linked
-        # list as we're iterating
+            # starting from the head, we'll traverse down to the second-to-last Node
+            # init another reference to keep track of where we are in the linked
+            # list as we're iterating
             current = self.head
 
         # keep iterating until the node after `current` is the tail
@@ -129,7 +129,6 @@ class LinkedList:
             # update the current node to the next node in the list
             current = current.get_next()
         return max_value
-
 
 # ll = Node(5)
 # ll.add_to_tail(7)

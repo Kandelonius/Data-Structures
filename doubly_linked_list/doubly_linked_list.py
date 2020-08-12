@@ -189,10 +189,10 @@ class DoublyLinkedList:
         else:
             node.next.prev = node.prev
             node.prev.next = node.next
-            node.next = None
-            node.prev = None
+            # node.next = None
+            # node.prev = None
             self.length -= 1
-            return node
+            # return node
 
 
     """

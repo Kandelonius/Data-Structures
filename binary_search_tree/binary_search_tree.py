@@ -42,6 +42,38 @@ class BSTNode:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
+        # lecture
+        # 1. base case
+        # if the value of this node matches the target, then we've found
+        # what we're looking for
+        if self.value == target:
+            return True
+        # 2. "how do we move closer to the base case?"
+        # compare the target against this node's value to determine which
+        # direction we need to go in
+        if target < self.value:
+            # we need to go left
+            # what if there is no left child?
+            if not self.left:
+                # then the value can't be in the tree
+                return False
+            # what if there is?
+            else:
+                # call `contains` on the left child
+                return self.left.contains(target)
+        else:
+            # we need to go right
+            # what if there is no right child?
+            if not self.right:
+                # then the value can't be in the tree
+                return False
+            # what if there is?
+            else:
+                # call `contains` on the right child
+                return self.right.contains(target)
+
+    """
+    #my work
         # midpoint = 0
         if self.value == target:
             return True
@@ -60,50 +92,122 @@ class BSTNode:
                 return self.right.contains(target)
             else:
                 return False
+    """
+
+
 
     # Return the maximum value found in the tree
     def get_max(self):
-        # self.left will always be smaller than self.right so max will always be to the right.
-        # if self.left is not None:
-        #     if self.left.value > self.value:
-        #         return self.left.get_max()
+        #Lecture start
+        # #recursive
+        # if not self.right:
+        #     return self.value
+        # return self.right.get_max()
+
+        #iterative
+        current = self
+        while current.right:
+            current = current.right
+        return current.value
+        #Lecture end
+        # # self.left will always be smaller than self.right so max will always be to the right.
+        # # if self.left is not None:
+        # #     if self.left.value > self.value:
+        # #         return self.left.get_max()
+        # #     else:
+        # #         return self.value
+        # # print(f"self.right is {self.right} self.value is {self.value}")
+        # if self.right is not None:
+        #     # print(f"self.right.value is {self.right.value} self.value is {self.value}")
+        #     if self.right.value > self.value:
+        #         return self.right.get_max()
         #     else:
         #         return self.value
-        print(f"self.right is {self.right} self.value is {self.value}")
-        if self.right is not None:
-            print(f"self.right.value is {self.right.value} self.value is {self.value}")
-            if self.right.value > self.value:
-                return self.right.get_max()
-            else:
-                return self.value
-        else:
-            return self.value
+        # else:
+        #     return self.value
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        fn(self.value)
-        if self.left is not None:
-            self.left.for_each(fn)
-        if self.right is not None:
-            # fn(self.value)
-            self.right.for_each(fn)
+        #lecture start
+        # #Recursive
+        # #call fn on self.value
+        # fn(self.value)
+        # #check if self has a left child
+        # if self.left:
+        #     #call 'for_each' on the left child, passing fn on that child
+        #     self.left.for_each(fn)
+        # #check if self has a right child
+        # if self.right:
+        #     # call 'for_each' on the right child, passing fn on that child
+        #     self.right.for_each(fn)
+        # #depth first(LIFO) iterative
+        # stack = []
+        # #add the root node to our stack
+        # stack.append(self)
+        # while len(stack) > 0:
+        #     current_node = stack.pop()
+        #     if current_node.right:
+        #         stack.append(current_node.right)
+        #     if current_node.left:
+        #         stack.append(current_node.left)
+        #bredth first(FIFO) traversal
+        from collections import deque
+        q = deque()
+        q.append(self)
+
+        while len(q) > 0:
+            current_node = q.popleft()
+            if current_node.left:
+                q.append(current_node.left)
+            if current_node.right:
+                q.append(current_node.right)
+            fn(current_node.value)
+        #lecture end
+        #
+        # fn(self.value)
+        # if self.left is not None:
+        #     self.left.for_each(fn)
+        # if self.right is not None:
+        #     # fn(self.value)
+        #     self.right.for_each(fn)
 
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self.left:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        # bring in a queue
+        from collections import deque
+        q = deque()
+        q.append(self)
+
+        while(len(q) > 0):
+            current = q.popleft()
+            print(current.value)
+            if current.left:
+                q.append(current.left)
+            if current.right:
+                q.append(current.right)
+            # print(current)
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        print(self.value)
+        if self.left:
+            self.left.dft_print()
+        if self.right:
+            self.right.dft_print()
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -130,13 +234,13 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-bst.bft_print()
-bst.dft_print()
+# bst.bft_print()
+# bst.dft_print()
 
 print("elegant methods")
 print("pre order")
-bst.pre_order_dft()
+# bst.pre_order_print()
 print("in order")
-# bst.in_order_dft()
+bst.in_order_print()
 print("post order")
-bst.post_order_dft()
+# bst.post_order_print()

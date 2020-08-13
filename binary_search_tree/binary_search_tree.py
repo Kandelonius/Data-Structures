@@ -94,22 +94,20 @@ class BSTNode:
                 return False
     """
 
-
-
     # Return the maximum value found in the tree
     def get_max(self):
-        #Lecture start
+        # Lecture start
         # #recursive
         # if not self.right:
         #     return self.value
         # return self.right.get_max()
 
-        #iterative
+        # iterative
         current = self
         while current.right:
             current = current.right
         return current.value
-        #Lecture end
+        # Lecture end
         # # self.left will always be smaller than self.right so max will always be to the right.
         # # if self.left is not None:
         # #     if self.left.value > self.value:
@@ -128,7 +126,7 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        #lecture start
+        # lecture start
         # #Recursive
         # #call fn on self.value
         # fn(self.value)
@@ -150,7 +148,8 @@ class BSTNode:
         #         stack.append(current_node.right)
         #     if current_node.left:
         #         stack.append(current_node.left)
-        #bredth first(FIFO) traversal
+        #     fn(current_node.value)
+        # bredth first(FIFO) traversal
         from collections import deque
         q = deque()
         q.append(self)
@@ -162,7 +161,7 @@ class BSTNode:
             if current_node.right:
                 q.append(current_node.right)
             fn(current_node.value)
-        #lecture end
+        # lecture end
         #
         # fn(self.value)
         # if self.left is not None:
@@ -190,7 +189,7 @@ class BSTNode:
         q = deque()
         q.append(self)
 
-        while(len(q) > 0):
+        while (len(q) > 0):
             current = q.popleft()
             print(current.value)
             if current.left:
@@ -199,22 +198,44 @@ class BSTNode:
                 q.append(current.right)
             # print(current)
 
-
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        print(self.value)
-        if self.left:
-            self.left.dft_print()
-        if self.right:
-            self.right.dft_print()
+        stack = []
+        # add the root
+        stack.append(self)
+        while len(stack) > 0:
+            # remove current from the stack
+            current = stack.pop()
+            if current.right:
+                # add right to the stack
+                stack.append(current.right)
+            if current.left:
+                # add left to the stack
+                stack.append(current.left)
+            print(current.value)
+        # #recursive
+        # print(self.value)
+        # if self.left:
+        #     self.left.dft_print()
+        # if self.right:
+        #     self.right.dft_print()
 
     # Stretch Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
-    def pre_order_dft(self):
-        pass
+    def pre_order_dft(self, root):
+        res = []
+        if root:
+            res.append(root.value)
+            print(root.value)
+            if root.left:
+                res = res + self.pre_order_dft(root.left)
+            if root.right:
+                res = res + self.pre_order_dft(root.right)
+        # print(res.value)
+        return res
 
     # Print Post-order recursive DFT
     def post_order_dft(self):
@@ -234,12 +255,12 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-# bst.bft_print()
-# bst.dft_print()
+bst.bft_print()
+bst.dft_print()
 
 print("elegant methods")
 print("pre order")
-# bst.pre_order_print()
+# bst.pre_order_dft()
 print("in order")
 bst.in_order_print()
 print("post order")

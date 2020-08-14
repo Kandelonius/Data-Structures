@@ -225,6 +225,9 @@ class BSTNode:
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
+    # 1. Visit root node
+    # 2. Visit all the nodes in the left subtree
+    # 3. Visit all the nodes in the right subtree
     def pre_order_dft(self, root):
         res = []
         if root:
@@ -234,12 +237,22 @@ class BSTNode:
                 res = res + self.pre_order_dft(root.left)
             if root.right:
                 res = res + self.pre_order_dft(root.right)
-        # print(res.value)
         return res
 
     # Print Post-order recursive DFT
-    def post_order_dft(self):
-        pass
+    # 1. Visit all the nodes in the left subtree
+    # 2. Visit all the nodes in the right subtree
+    # 3. Visit the root node.
+    def post_order_dft(self, root):
+        res = []
+        if root:
+            if root.left:
+                res = self.post_order_dft(root.left)
+            if root.right:
+                res = res + self.post_order_dft(root.right)
+            res.append(root.value)
+            print(root.value)
+        return res
 
 
 """
